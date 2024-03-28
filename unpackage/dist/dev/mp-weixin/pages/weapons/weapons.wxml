@@ -1,0 +1,1 @@
+<view><view class="weaponList"><view>{{"一共 "+$root.g0+" 把太刀"}}</view><block wx:for="{{weapons}}" wx:for-item="item" wx:for-index="__i0__" wx:key="id"><view class="weapon-item"><view>{{item.id+" - "+item.name}}</view></view></block></view></view>
