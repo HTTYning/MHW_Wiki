@@ -1,1 +1,0 @@
-<view><view data-event-opts="{{[['tap',[['getWeapons',['$event']]]]]}}" class="list" catchtap="__e">1111</view></view>
