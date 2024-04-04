@@ -67,9 +67,10 @@
 				weaponsType:''
 			};
 		},
-		onLoad() {
-			// this.weaponsType = 'long-sword';0
-			this.weaponsType = 'great-sword';
+		onLoad(option) {
+			this.weaponsType = option.weaponName;
+			// this.weaponsType = 'long-sword';
+			// this.weaponsType = 'great-sword';
 			// this.weaponsType = 'light-bowgun';
 			// this.removeData('weaponsData');
 			this.checkData()

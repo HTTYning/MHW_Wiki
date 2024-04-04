@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/weapons/weapons",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/weapons/weapons"
   ],
   "subPackages": [],
   "window": {
