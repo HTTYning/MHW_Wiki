@@ -67,9 +67,6 @@
   align-items: center;
   padding: 5px 0;
 }
-.weaponList .weapon-item .weapon-attribute view {
-  margin: 3px 0;
-}
 .weaponList .weapon-item .weapon-attribute .weapon-img {
   width: 100px;
   height: 100px;
@@ -78,15 +75,36 @@
   width: 100%;
   height: 100%;
 }
-.weaponList .weapon-item .weapon-attribute .weapon-slots {
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value {
+  margin: 3px 0;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 3px;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value-icon image {
+  width: 100%;
+  height: 100%;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value {
+  font-weight: bold;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots {
   display: flex;
   flex-direction: row;
 }
-.weaponList .weapon-item .weapon-attribute .weapon-slots image {
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots image {
   width: 20px;
   height: 20px;
 }
-.weaponList .weapon-item .weapon-attribute .weapon-durability {
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability {
   width: 150px;
   height: 10px;
   display: flex;
@@ -95,7 +113,7 @@
   background-color: gray;
   border: 1px solid black;
 }
-.weaponList .weapon-item .weapon-attribute .weapon-durability view {
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability view {
   height: 100%;
 }
 

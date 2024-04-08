@@ -9,7 +9,12 @@
 			</view>
 			<view class="weapon-fold-list" :class="weaponStatus?'':'weapon-flod-list-dis'">
 				<view class="weapon-item" @click="goWeaponPage(item.name)" v-for="(item,index) in weaponType" :key="index">
-					{{item.name}}
+					<view class="weapon-icon">
+						<image :src="item.img" mode="aspectFit"></image>
+					</view>
+					<view class="weapon-name">
+						{{item.name}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -27,59 +32,59 @@
 				weaponType:[
 					{
 						name:'great-sword',
-						img:''
+						img:'/static/index-weapon/weapon_type_great-sword.png'
 					},
 					{
 						name:'long-sword',
-						img:''
+						img:'/static/index-weapon/weapon_type_long-sword.png'
 					},
 					{
 						name:'sword-and-shield',
-						img:''
+						img:'/static/index-weapon/weapon_type_sword-and-shield.png'
 					},
 					{
 						name:'dual-blades',
-						img:''
+						img:'/static/index-weapon/weapon_type_dual-blades.png'
 					},
 					{
 						name:'hammer',
-						img:''
+						img:'/static/index-weapon/weapon_type_hammer.png'
 					},
 					{
 						name:'hunting-horn',
-						img:''
+						img:'/static/index-weapon/weapon_type_hunting-horn.png'
 					},
 					{
 						name:'lance',
-						img:''
+						img:'/static/index-weapon/weapon_type_lance.png'
 					},
 					{
 						name:'gunlance',
-						img:''
+						img:'/static/index-weapon/weapon_type_gunlance.png'
 					},
 					{
 						name:'switch-axe',
-						img:''
+						img:'/static/index-weapon/weapon_type_switch-axe.png'
 					},
 					{
 						name:'charge-blade',
-						img:''
+						img:'/static/index-weapon/weapon_type_charge-blade.png'
 					},
 					{
 						name:'insect-glaive',
-						img:''
+						img:'/static/index-weapon/weapon_type_insect-glaive.png'
 					},
 					{
 						name:'light-bowgun',
-						img:''
+						img:'/static/index-weapon/weapon_type_light-bowgun.png'
 					},
 					{
 						name:'heavy-bowgun',
-						img:''
+						img:'/static/index-weapon/weapon_type_heavy-bowgun.png'
 					},
 					{
 						name:'bow',
-						img:''
+						img:'/static/index-weapon/weapon_type_bow.png'
 					}
 				],
 				weaponStatus:true
@@ -132,7 +137,7 @@
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			transition: all 0.3s ease-out 0s;
+			transition: all 0.5s ease-out 0s;
 			max-height: 1000px;
 			.weapon-item{
 				padding: 14px 20px;
@@ -142,11 +147,24 @@
 				border: 1px solid rgba(223, 223, 223, 1);
 				background-color: white;
 				box-sizing: border-box;
+				align-items: center;
+				.weapon-icon{
+					width: 24px;
+					height: 24px;
+					margin-right: 10px;
+					image{
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.weapon-name{
+					font-weight: bold;
+				}
 			}
 		}
 		.weapon-flod-list-dis{
 			max-height: 0;
-			opacity: 0;
+			opacity: 0.3;
 			visibility: hidden;
 		}
 	}

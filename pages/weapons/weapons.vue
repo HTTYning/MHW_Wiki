@@ -14,26 +14,31 @@
 						<img :src="item.assets.image" alt="" mode="aspectFit">
 					</view>
 					<view class="weapon-attribute-value">
-						<view class="weapon-rarity">
+						<view class="weapon-value-box weapon-rarity">
 							rarity: {{item.rarity}}
 						</view>
-						<view class="weapon-attack">
+						<view class="weapon-value-box weapon-attack">
 							attack: {{item.attack.display}}({{item.attack.raw}})
 						</view>
-						<view class="weapon-affinity">
-							affinity: {{(item.attributes.affinity?item.attributes.affinity:'0')+'%'}}
+						<view class="weapon-value-box weapon-affinity">
+							<view class="weapon-value-icon">
+								<image src="../../static/weapon/affinity.png" mode=""></image>
+							</view>
+							<view class="weapon-value">
+								{{(item.attributes.affinity?item.attributes.affinity:'0')+'%'}}
+							</view>
 						</view>
-						<view class="weapon-elements" v-if="item.elements" v-for="elements in item.elements" :key="item.index">
+						<view class="weapon-value-box weapon-elements" v-if="item.elements" v-for="elements in item.elements" :key="item.index">
 							elements: {{elements.type}} {{elements.damage}}
 							<br>
 							{{item.elderseal ? "elderseal: "+item.elderseal:""}}
 						</view>
-						<view class="weapon-slots">
+						<view class="weapon-value-box weapon-slots">
 							<image :src="'../../static/weapon/slot-'+(item.slots[0].rank ? item.slots[0].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 							<image :src="'../../static/weapon/slot-'+(item.slots[1].rank ? item.slots[1].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 							<image :src="'../../static/weapon/slot-'+(item.slots[2].rank ? item.slots[2].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 						</view>
-						<view class="weapon-durability" v-if="item.durability">
+						<view class="weapon-value-box weapon-durability" v-if="item.durability">
 							<view :style="{backgroundColor: 'red', width:((item.durability[0].red/400)*100)+'%'}"></view>
 							<view :style="{backgroundColor: 'orange', width:((item.durability[0].orange/400)*100)+'%'}"></view>
 							<view :style="{backgroundColor: 'yellow', width:((item.durability[0].yellow/400)*100)+'%'}"></view>
@@ -188,9 +193,6 @@
 				flex-direction: row;
 				align-items: center;
 				padding: 5px 0;
-				view{
-					margin: 3px 0;
-				}
 				.weapon-img{
 					width: 100px;
 					height: 100px;
@@ -199,24 +201,45 @@
 						height: 100%;
 					}
 				}
-				.weapon-slots{
-					display: flex;
-					flex-direction: row;
-					image{
-						width: 20px;
-						height: 20px;
+				.weapon-attribute-value{
+					margin: 3px 0;
+					.weapon-value-box{
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						justify-content: left;
+						.weapon-value-icon{
+							width: 18px;
+							height: 18px;
+							margin-right: 3px;
+							image{
+								width: 100%;
+								height: 100%;
+							}
+						}
+						.weapon-value{
+							font-weight: bold;
+						}
 					}
-				}
-				.weapon-durability{
-					width: 150px;
-					height: 10px;
-					display: flex;
-					flex-direction: row;
-					align-items: center;
-					background-color: gray;
-					border: 1px solid black;
-					view{
-						height: 100%;
+					.weapon-slots{
+						display: flex;
+						flex-direction: row;
+						image{
+							width: 20px;
+							height: 20px;
+						}
+					}
+					.weapon-durability{
+						width: 150px;
+						height: 10px;
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+						background-color: gray;
+						border: 1px solid black;
+						view{
+							height: 100%;
+						}
 					}
 				}
 			}

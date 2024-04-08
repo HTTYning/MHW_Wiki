@@ -56,7 +56,7 @@ page {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  transition: all 0.3s ease-out 0s;
+  transition: all 0.5s ease-out 0s;
   max-height: 1000px;
 }
 .weapon-fold .weapon-fold-list .weapon-item {
@@ -67,10 +67,23 @@ page {
   border: 1px solid #dfdfdf;
   background-color: white;
   box-sizing: border-box;
+  align-items: center;
+}
+.weapon-fold .weapon-fold-list .weapon-item .weapon-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+.weapon-fold .weapon-fold-list .weapon-item .weapon-icon image {
+  width: 100%;
+  height: 100%;
+}
+.weapon-fold .weapon-fold-list .weapon-item .weapon-name {
+  font-weight: bold;
 }
 .weapon-fold .weapon-flod-list-dis {
   max-height: 0;
-  opacity: 0;
+  opacity: 0.3;
   visibility: hidden;
 }
 
