@@ -15,7 +15,10 @@
 					</view>
 					<view class="weapon-attribute-value">
 						<view class="weapon-value-box weapon-rarity">
-							Rare: {{item.rarity}}
+							Rare:
+							<view class="weapon-value">
+								{{item.rarity}}
+							</view>
 						</view>
 						<view class="weapon-value-box weapon-attack">
 							<view class="weapon-value-icon">
@@ -95,13 +98,17 @@
 						</view> -->
 						<view class="weapon-value-box weapon-ammo" v-if="item.ammo">
 							<view class="weapon-ammo-item" v-for="(ammo,ammoIndex) in item.ammo" :key="ammoIndex">
-								<!-- <view class="weapon-value-icon">
-									
-								</view> -->
-								{{ammo.type}}
-								<view class="weapon-value weapon-ammo-number" v-for="capacities in ammo.capacities" :key="capacities.index">
-									{{capacities}}|
+								<view class="weapon-value-icon weapon-ammo-icon">
+									<image :src="'../../static/weapon/ammo/'+ammo.type+'.png'" mode="aspectFit"></image>
 								</view>
+								<view class="weapon-value weapon-ammo-number" v-for="capacities in ammo.capacities" :key="capacities.index">
+									{{capacities}}
+								</view>
+							</view>
+						</view>
+						<view class="weapon-value-box weapon-coatings" v-if="item.coatings">
+							<view class="weapon-value-icon weapon-coatings-icon" v-for="(coatings,coatingsIndex) in item.coatings" :key="coatingsIndex">
+								<image :src="'../../static/weapon/coatings/'+coatings+'.png'" mode="aspectFit"></image>
 							</view>
 						</view>
 					</view>
@@ -259,6 +266,7 @@
 						flex-direction: row;
 						align-items: center;
 						justify-content: left;
+						margin-bottom: 2px;
 						.weapon-value-icon{
 							width: 18px;
 							height: 18px;
@@ -270,6 +278,7 @@
 						}
 						.weapon-value{
 							// font-weight: bold;
+							color: rgba(80, 80, 80, 1);
 						}
 					}
 					.weapon-slots{
@@ -281,14 +290,13 @@
 						}
 					}
 					.weapon-durability{
-						width: 150px;
-						height: 10px;
+						width: 200px;
+						height: 12px;
 						display: flex;
 						flex-direction: row;
 						align-items: center;
 						background-color: rgba(200, 200, 200, 1);
 						border: 1px solid rgba(180, 180, 180, 1);
-						margin-top: 3px;
 						border-radius: 1px;
 						.weapon-dur-bar{
 							height: 100%;
@@ -301,10 +309,10 @@
 								transform: translate(-50%,-50%);
 								color: black;
 								font-size: 8px;
-								text-shadow: -1px 0 rgba(223, 223, 223, 1),  /* 左边 */  
-								             0 1px rgba(223, 223, 223, 1),  /* 下边 */  
-								             1px 0 rgba(223, 223, 223, 1),  /* 右边 */  
-								             0 -1px rgba(223, 223, 223, 1); /* 上边 */  
+								text-shadow: -1px 0 rgba(200, 200, 200, 1),  /* 左边 */  
+								             0 1px rgba(200, 200, 200, 1),  /* 下边 */  
+								             1px 0 rgba(200, 200, 200, 1),  /* 右边 */  
+								             0 -1px rgba(200, 200, 200, 1); /* 上边 */  
 							}
 						}
 					}
@@ -315,12 +323,25 @@
 						.weapon-ammo-item{
 							display: flex;
 							justify-content: left;
-							flex: 0 0 calc(50%);
+							flex: 0 0 calc(24%);
 							box-sizing: border-box;
 							align-items: center;
+							border: 1px solid rgba(223, 223, 223, 1);
+							margin-right: 1px;
+							margin-bottom: 1px;
 							.weapon-ammo-number{
-								
+								padding: 1px;
 							}
+						}
+					}
+					.weapon-coatings{
+						display: flex;
+						flex-direction: row;
+						.weapon-coatings-icon{
+							width: 22px;
+							height: 22px;
+							background-color: rgba(240, 240,240, 1);
+							border-radius: 5px;
 						}
 					}
 				}

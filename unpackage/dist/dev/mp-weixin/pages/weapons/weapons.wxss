@@ -86,6 +86,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: left;
+  margin-bottom: 2px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value-icon {
   width: 18px;
@@ -96,6 +97,9 @@
   width: 100%;
   height: 100%;
 }
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value {
+  color: #505050;
+}
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots {
   display: flex;
   flex-direction: row;
@@ -105,14 +109,13 @@
   height: 20px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability {
-  width: 150px;
-  height: 10px;
+  width: 200px;
+  height: 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: #c8c8c8;
   border: 1px solid #b4b4b4;
-  margin-top: 3px;
   border-radius: 1px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability .weapon-dur-bar {
@@ -128,7 +131,7 @@
           transform: translate(-50%, -50%);
   color: black;
   font-size: 8px;
-  text-shadow: -1px 0 #dfdfdf, 0 1px #dfdfdf, 1px 0 #dfdfdf, 0 -1px #dfdfdf;
+  text-shadow: -1px 0 #c8c8c8, 0 1px #c8c8c8, 1px 0 #c8c8c8, 0 -1px #c8c8c8;
   /* 上边 */
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-ammo {
@@ -139,8 +142,24 @@
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-ammo .weapon-ammo-item {
   display: flex;
   justify-content: left;
-  flex: 0 0 calc(50%);
+  flex: 0 0 calc(24%);
   box-sizing: border-box;
   align-items: center;
+  border: 1px solid #dfdfdf;
+  margin-right: 1px;
+  margin-bottom: 1px;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-ammo .weapon-ammo-item .weapon-ammo-number {
+  padding: 1px;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-coatings {
+  display: flex;
+  flex-direction: row;
+}
+.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-coatings .weapon-coatings-icon {
+  width: 22px;
+  height: 22px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
 }
 
