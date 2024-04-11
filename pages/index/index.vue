@@ -159,6 +159,7 @@
 				}
 				.weapon-name{
 					font-weight: bold;
+					color: rgba(45, 45, 45, 1);
 				}
 			}
 		}

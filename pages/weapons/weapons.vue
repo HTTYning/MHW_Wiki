@@ -1,7 +1,14 @@
 <template>
 	<view>
 		<view class="weaponList">
-			<!-- <view class="weapon-number">{{weaponsType}} / {{weapons.length}}</view> -->
+			<view class="weapon-title-type">
+				<view class="weapon-title-type-image">
+					<image :src="weaponTypeImagePath" mode="aspectFit"></image>
+				</view>
+				<view>
+					{{weaponsType}}
+				</view>
+			</view>
 			<view class="weapon-item" v-for="item in weapons" :key="item.id">
 				<view class="weapon-titile-bar">
 					<view class="weapon-icon">
@@ -14,12 +21,14 @@
 						<img :src="item.assets.image" alt="" mode="aspectFit">
 					</view>
 					<view class="weapon-attribute-value">
+						<!-- rarity -->
 						<view class="weapon-value-box weapon-rarity">
 							Rare:
 							<view class="weapon-value">
 								{{item.rarity}}
 							</view>
 						</view>
+						<!-- attack -->
 						<view class="weapon-value-box weapon-attack">
 							<view class="weapon-value-icon">
 								<image src="../../static/weapon/attack.png" mode="aspectFit"></image>
@@ -28,6 +37,7 @@
 								{{item.attack.display}}({{item.attack.raw}})
 							</view>
 						</view>
+						<!-- affinity -->
 						<view class="weapon-value-box weapon-affinity">
 							<view class="weapon-value-icon">
 								<image src="../../static/weapon/affinity.png" mode="aspectFit"></image>
@@ -36,40 +46,78 @@
 								{{(item.attributes.affinity?item.attributes.affinity:'0')+'%'}}
 							</view>
 						</view>
+						<!-- defense -->
+						<view class="weapon-value-box weapon-defense">
+							<view class="weapon-value-icon">
+								<image src="../../static/weapon/defense.png" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.attributes.defense?item.attributes.defense:'0'}}
+							</view>
+						</view>
+						<!-- elementsDamage and elementsDamageType -->
 						<view class="weapon-value-box weapon-elements" v-if="item.elements" v-for="elements in item.elements" :key="item.index">
 							<view class="weapon-value-icon">
 								<image :src="'../../static/weapon/element/'+elements.type+'.png'" mode="aspectFit"></image>
 							</view>
 							<view class="weapon-value">
-								{{elements.damage}} {{item.elderseal ? "elderseal: "+item.elderseal:""}}
+								{{elements.damage}}
 							</view>
 						</view>
+						<!-- elderseal -->
+						<view class="weapon-value-box weapon-elderseal" v-if="item.elderseal">
+							<view class="weapon-value-icon">
+								<image src="../../static/weapon/elderseal.png" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.elderseal}}
+							</view>
+						</view>
+						<!-- slots -->
 						<view class="weapon-value-box weapon-slots">
+							<view class="weapon-value-icon weapon-slots-icon">
+								<image src="../../static/weapon/slots.png" mode="aspectFit"></image>
+							</view>
 							<image :src="'../../static/weapon/slot-'+(item.slots[0].rank ? item.slots[0].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 							<image :src="'../../static/weapon/slot-'+(item.slots[1].rank ? item.slots[1].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 							<image :src="'../../static/weapon/slot-'+(item.slots[2].rank ? item.slots[2].rank : slotsNullStr)+'.png'" mode="aspectFit"></image>
 						</view>
+						<!-- bowgun - deviation -->
+						<view class="weapon-value-box weapon-deviation" v-if="item.deviation">
+							<view class="weapon-value-icon">
+								<image src="../../static/weapon/deviation.png" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.deviation}}
+							</view>
+						</view>
+						<!-- durability -->
 						<view class="weapon-value-box weapon-durability" v-if="item.durability">
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'red', width:((item.durability[0].red/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].red!=0">{{item.durability[0].red}}</view>
+							<view class="weapon-value-icon weapon-durability-icon">
+								<image src="../../static/weapon/durability.png" mode="aspectFit"></image>
 							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'orange', width:((item.durability[0].orange/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].orange!=0">{{item.durability[0].orange}}</view>
-							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'yellow', width:((item.durability[0].yellow/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].yellow!=0">{{item.durability[0].yellow}}</view>
-							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'green', width:((item.durability[0].green/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].green!=0">{{item.durability[0].green}}</view>
-							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'blue', width:((item.durability[0].blue/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].blue!=0">{{item.durability[0].blue}}</view>
-							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'white', width:((item.durability[0].white/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].white!=0">{{item.durability[0].white}}</view>
-							</view>
-							<view class="weapon-dur-bar" :style="{backgroundColor: 'purple', width:((item.durability[0].purple/400)*100)+'%'}">
-								<view class="weapon-dur-value" v-if="item.durability[0].purple!=0">{{item.durability[0].purple}}</view>
+							<view class="weapon-dur-bar">
+								<view class="weapon-dur-item" :style="{backgroundColor: 'red', width:((item.durability[0].red/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].red!=0">{{item.durability[0].red}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'orange', width:((item.durability[0].orange/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].orange!=0">{{item.durability[0].orange}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'yellow', width:((item.durability[0].yellow/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].yellow!=0">{{item.durability[0].yellow}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'green', width:((item.durability[0].green/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].green!=0">{{item.durability[0].green}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'blue', width:((item.durability[0].blue/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].blue!=0">{{item.durability[0].blue}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'white', width:((item.durability[0].white/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].white!=0">{{item.durability[0].white}}</view>
+								</view>
+								<view class="weapon-dur-item" :style="{backgroundColor: 'purple', width:((item.durability[0].purple/400)*100)+'%'}">
+									<view class="weapon-dur-value" v-if="item.durability[0].purple!=0">{{item.durability[0].purple}}</view>
+								</view>
 							</view>
 						</view>
 						<!-- 5匠珠效果渲染 -->
@@ -96,6 +144,7 @@
 								<view class="weapon-dur-value" v-if="dur.purple!=0">{{dur.purple}}</view>
 							</view>
 						</view> -->
+						<!-- bowgun - ammo -->
 						<view class="weapon-value-box weapon-ammo" v-if="item.ammo">
 							<view class="weapon-ammo-item" v-for="(ammo,ammoIndex) in item.ammo" :key="ammoIndex">
 								<view class="weapon-value-icon weapon-ammo-icon">
@@ -106,6 +155,16 @@
 								</view>
 							</view>
 						</view>
+						<!-- bowgun - specialAmmo -->
+						<view class="weapon-value-box weapon-specialAmmo" v-if="item.specialAmmo">
+							<view class="weapon-value-icon">
+								<image src="../../static/weapon/specialAmmo.png" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.specialAmmo}}
+							</view>
+						</view>
+						<!-- bow - coatings -->
 						<view class="weapon-value-box weapon-coatings" v-if="item.coatings">
 							<view class="weapon-value-icon weapon-coatings-icon" v-for="(coatings,coatingsIndex) in item.coatings" :key="coatingsIndex">
 								<image :src="'../../static/weapon/coatings/'+coatings+'.png'" mode="aspectFit"></image>
@@ -124,11 +183,13 @@
 			return {
 				weapons: [],
 				slotsNullStr:"null",
-				weaponsType:''
+				weaponsType:'',
+				weaponTypeImagePath:''
 			};
 		},
 		onLoad(option) {
 			this.weaponsType = option.weaponName;
+			this.weaponTypeImagePath = '../../static/index-weapon/weapon_type_'+this.weaponsType+'.png'
 			// this.weaponsType = 'long-sword';
 			// this.weaponsType = 'great-sword';
 			// this.weaponsType = 'light-bowgun';
@@ -206,11 +267,26 @@
 </script>
 
 <style lang="scss">
-	.weapon-number{
-		padding: 5px;
-		font-size: 22px;
+	.weapon-title-type{
+		width: 100%;
+		height: 40px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 		font-weight: bold;
-		background-color: rgba(0, 0, 0, .2);
+		font-size: 22px;
+		background-color: rgba(240, 240, 240, 1);
+		color: rgba(80, 80, 80, 1);
+		.weapon-title-type-image{
+			width: 26px;
+			height: 26px;
+			margin-right: 10px;
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
 	}
 	.weaponList {
 		.weapon-item{
@@ -243,6 +319,7 @@
 					size: 20px;
 					font-weight: bold;
 					color:black;
+					color: rgba(45, 45, 45, 1);
 				}
 			}
 			.weapon-attribute{
@@ -284,35 +361,47 @@
 					.weapon-slots{
 						display: flex;
 						flex-direction: row;
-						image{
+						.weapon-slots-icon{
+							background-color: rgba(220, 220, 220, 1);
+							border-radius: 3px;
+							padding: 2px;
+						}
+						>image{
 							width: 20px;
 							height: 20px;
 						}
 					}
 					.weapon-durability{
-						width: 200px;
-						height: 12px;
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						background-color: rgba(200, 200, 200, 1);
-						border: 1px solid rgba(180, 180, 180, 1);
-						border-radius: 1px;
+						.weapon-durability-icon{
+							background-color: rgba(220, 220, 220, 1);
+							border-radius: 3px;
+							padding: 2px;
+						}
 						.weapon-dur-bar{
-							height: 100%;
-							opacity: 0.8;
-							position: relative;
-							.weapon-dur-value{
-								position: absolute;
-								top: 50%;
-								left: 50%;
-								transform: translate(-50%,-50%);
-								color: black;
-								font-size: 8px;
-								text-shadow: -1px 0 rgba(200, 200, 200, 1),  /* 左边 */  
-								             0 1px rgba(200, 200, 200, 1),  /* 下边 */  
-								             1px 0 rgba(200, 200, 200, 1),  /* 右边 */  
-								             0 -1px rgba(200, 200, 200, 1); /* 上边 */  
+							width: 200px;
+							height: 18px;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							background-color: rgba(200, 200, 200, 1);
+							border: 1px solid rgba(180, 180, 180, 1);
+							border-radius: 1px;
+							.weapon-dur-item{
+								height: 100%;
+								opacity: 0.8;
+								position: relative;
+								.weapon-dur-value{
+									position: absolute;
+									top: 50%;
+									left: 50%;
+									transform: translate(-50%,-50%);
+									color: black;
+									font-size: 8px;
+									text-shadow: -1px 0 rgba(200, 200, 200, 1),  /* 左边 */  
+									             0 1px rgba(200, 200, 200, 1),  /* 下边 */  
+									             1px 0 rgba(200, 200, 200, 1),  /* 右边 */  
+									             0 -1px rgba(200, 200, 200, 1); /* 上边 */  
+								}
 							}
 						}
 					}

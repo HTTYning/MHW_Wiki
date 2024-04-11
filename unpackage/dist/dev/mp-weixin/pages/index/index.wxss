@@ -80,6 +80,7 @@ page {
 }
 .weapon-fold .weapon-fold-list .weapon-item .weapon-name {
   font-weight: bold;
+  color: #2d2d2d;
 }
 .weapon-fold .weapon-flod-list-dis {
   max-height: 0;
