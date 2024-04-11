@@ -170,6 +170,30 @@
 								<image :src="'../../static/weapon/coatings/'+coatings+'.png'" mode="aspectFit"></image>
 							</view>
 						</view>
+						<!-- gunlance - shelling -->
+						<view class="weapon-value-box weapon-shelling" v-if="item.shelling">
+							<view class="weapon-value-icon weapon-shelling-icon">
+								<image src="../../static/weapon/shelling.png" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.shelling.type}}
+							</view>
+							<view class="weapon-value">
+								Level{{item.shelling.level}}
+							</view>
+						</view>
+						<!-- switch-axe - phial -->
+						<view class="weapon-value-box weapon-phial" v-if="item.phial">
+							<view class="weapon-value-icon weapon-phial-icon">
+								<image :src="'../../static/weapon/phial.png'" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.phial.type}}
+							</view>
+							<!-- <view class="weapon-value">
+								{{item.phial.damage}}
+							</view> -->
+						</view>
 					</view>
 				</view>
 			</view>
@@ -348,35 +372,28 @@
 							width: 18px;
 							height: 18px;
 							margin-right: 3px;
+							background-color: rgba(220, 220, 220, 1);
+							border-radius: 3px;
+							padding: 2px;
 							image{
 								width: 100%;
 								height: 100%;
 							}
 						}
 						.weapon-value{
-							// font-weight: bold;
 							color: rgba(80, 80, 80, 1);
+							margin-right: 3px;
 						}
 					}
 					.weapon-slots{
 						display: flex;
 						flex-direction: row;
-						.weapon-slots-icon{
-							background-color: rgba(220, 220, 220, 1);
-							border-radius: 3px;
-							padding: 2px;
-						}
 						>image{
 							width: 20px;
 							height: 20px;
 						}
 					}
 					.weapon-durability{
-						.weapon-durability-icon{
-							background-color: rgba(220, 220, 220, 1);
-							border-radius: 3px;
-							padding: 2px;
-						}
 						.weapon-dur-bar{
 							width: 200px;
 							height: 18px;

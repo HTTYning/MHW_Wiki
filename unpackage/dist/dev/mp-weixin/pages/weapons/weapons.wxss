@@ -108,6 +108,9 @@
   width: 18px;
   height: 18px;
   margin-right: 3px;
+  background-color: gainsboro;
+  border-radius: 3px;
+  padding: 2px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value-icon image {
   width: 100%;
@@ -115,24 +118,15 @@
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-value-box .weapon-value {
   color: #505050;
+  margin-right: 3px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots {
   display: flex;
   flex-direction: row;
 }
-.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots .weapon-slots-icon {
-  background-color: gainsboro;
-  border-radius: 3px;
-  padding: 2px;
-}
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-slots > image {
   width: 20px;
   height: 20px;
-}
-.weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability .weapon-durability-icon {
-  background-color: gainsboro;
-  border-radius: 3px;
-  padding: 2px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-durability .weapon-dur-bar {
   width: 200px;
