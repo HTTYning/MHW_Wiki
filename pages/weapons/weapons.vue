@@ -1,15 +1,23 @@
 <template>
 	<view>
-		<view class="weaponList">
-			<view class="weapon-title-type">
-				<view class="weapon-title-type-image">
-					<image :src="weaponTypeImagePath" mode="aspectFit"></image>
-				</view>
-				<view>
-					{{weaponsType}}
-				</view>
+		<view class="search-box">
+			<view class="search-text">
+				<input class="search-ipt" @input="searchEvent()" type="text" v-model="searchTxt" placeholder="Please enter a name">
 			</view>
-			<view class="weapon-item" v-for="item in weapons" :key="item.id">
+			<view class="search-reset-btn" @click="searchReset()">
+				<image class="search-reset-icon" src="../../static/weapon/reset.png" mode="aspectFit"></image>
+			</view>
+		</view>
+		<view class="weapon-title-type">
+			<view class="weapon-title-type-image">
+				<image :src="weaponTypeImagePath" mode="aspectFit"></image>
+			</view>
+			<view>
+				{{weaponsType}}
+			</view>
+		</view>
+		<view class="weaponList">
+			<view class="weapon-item" v-for="item in weapons" :key="item.id" @click="weaponDetails(item.id)">
 				<view class="weapon-titile-bar">
 					<view class="weapon-icon">
 						<img :src="item.assets.icon" alt="" mode="aspectFit">
@@ -217,17 +225,15 @@
 				weapons: [],
 				slotsNullStr:"null",
 				weaponsType:'',
-				weaponTypeImagePath:''
+				weaponTypeImagePath:'',
+				searchTxt:''
 			};
 		},
 		onLoad(option) {
 			this.weaponsType = option.weaponName;
 			this.weaponTypeImagePath = '../../static/index-weapon/weapon_type_'+this.weaponsType+'.png'
-			// this.weaponsType = 'long-sword';
-			// this.weaponsType = 'great-sword';
-			// this.weaponsType = 'light-bowgun';
 			// this.removeData('weaponsData');
-			this.checkData()
+			this.checkData();
 		},
 		methods: {
 			async getWeapons() {
@@ -266,6 +272,7 @@
 					return false;
 				}
 			},
+			// 删除本地数据（未启用）
 			removeData(storageId) {
 				// 同步删除数据
 				try {
@@ -275,6 +282,7 @@
 					console.error(storageId + ' - 本地数据删除失败!');
 				}
 			},
+			// 加载数据到数组里进行数据渲染
 			renderingData() {
 				let rdDataArray = [];
 				let weaponsArray = [];
@@ -294,12 +302,86 @@
 				} catch (e) {
 					console.error('武器数据获取失败');
 				}
-			}
+			},
+			// 清空搜索框
+			searchReset(){
+				this.searchTxt = '';
+				this.searchEvent();
+			},
+			// 搜索事件
+			searchEvent(){
+				let tempArray = [];
+				let weaponsArray = [];
+				// 创建一个正则表达式，添加 'i' 标志来执行不区分大小写的匹配  
+				let regex = new RegExp(this.searchTxt, 'i');  
+				if(this.searchTxt != ''){
+					const value = uni.getStorageSync('weaponsData');
+					if (value) {
+						weaponsArray = value;
+						for (var i = 0; i < weaponsArray.length; i++) {
+							if (weaponsArray[i].type == this.weaponsType && regex.test(weaponsArray[i].name)) {
+								tempArray.push(weaponsArray[i])
+							}
+						}
+						this.weapons = tempArray;
+					}
+				}else{
+					this.checkData();
+				}
+			},
+			// 跳转到武器详情页面
+			weaponDetails(weaponId){
+				uni.navigateTo({
+					url: '/pages/weaponDetails/weaponDetails?&weaponId='+weaponId
+				});
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
+	.search-box{
+		width: 80%;
+		height: 40px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		position: fixed;
+		bottom: 30px;
+		left: 50%;
+		transform: translateX(-50%);
+		border: 2px solid rgba(180, 180, 180, 1);
+		border-radius: 5px;
+		overflow: hidden;
+		z-index: 1000;
+		.search-text{
+			width: 100%;
+			.search-ipt{
+				height: 40px;
+				padding: 0 26px 0 6px;
+				background-color: rgba(240, 240, 240, 1);
+			}
+		}
+		.search-reset-btn{
+			width: 20px;
+			height: 40px;
+			position: absolute;
+			right: 0px;
+			top: 50%;
+			transform: translateY(-50%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-right: 5px;
+			image{
+				width: 20px;
+				height: 20px;
+				transform: rotate(45deg);
+			}
+		}
+	}
 	.weapon-title-type{
 		width: 100%;
 		height: 40px;
@@ -311,6 +393,7 @@
 		font-size: 22px;
 		background-color: rgba(240, 240, 240, 1);
 		color: rgba(80, 80, 80, 1);
+		border-bottom: 2px solid rgba(200, 200, 200, 1);
 		.weapon-title-type-image{
 			width: 26px;
 			height: 26px;

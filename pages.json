@@ -13,6 +13,14 @@
 		        "navigationBarTitleText": "武器"
 		    }
 		}
+        ,{
+            "path" : "pages/weaponDetails/weaponDetails",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "武器详细"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

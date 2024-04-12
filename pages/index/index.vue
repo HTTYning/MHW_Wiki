@@ -4,7 +4,7 @@
 			<view class="weapon-fold-title">
 				<view>武器</view>
 				<view class="weapon-fold-btn" @click="switchWeapon()">
-					⬇
+					<image src="../../static/show-btn.png" :class="weaponStatus?'':'weapon-fold-btn-rotate'" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="weapon-fold-list" :class="weaponStatus?'':'weapon-flod-list-dis'">
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-	
 	export default {
 		data() {
 			return {
@@ -126,11 +125,22 @@
 			border: 1px solid rgba(223, 223, 223, 1);
 			position: relative;
 			z-index: 1000;
+			color: rgba(81, 81, 81, 1);
 			.weapon-fold-btn{
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
 				right: 20px;
+				width: 20px;
+				height: 20px;
+				image{
+					width: 100%;
+					height: 100%;
+					transition: all 0.5s ease-out 0s;
+				}
+			}
+			.weapon-fold-btn-rotate{
+				transform: rotate(135deg);
 			}
 		}
 		.weapon-fold-list{
@@ -159,7 +169,7 @@
 				}
 				.weapon-name{
 					font-weight: bold;
-					color: rgba(45, 45, 45, 1);
+					color: rgba(81, 81, 81, 1);
 				}
 			}
 		}
