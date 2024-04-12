@@ -162,12 +162,14 @@
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-ammo .weapon-ammo-item {
   display: flex;
   justify-content: left;
-  flex: 0 0 calc(24%);
+  flex: 0 0 calc(31%);
   box-sizing: border-box;
   align-items: center;
   border: 1px solid #dfdfdf;
   margin-right: 1px;
   margin-bottom: 1px;
+  margin-top: 0;
+  border-radius: 3px;
 }
 .weaponList .weapon-item .weapon-attribute .weapon-attribute-value .weapon-ammo .weapon-ammo-item .weapon-ammo-number {
   padding: 1px;

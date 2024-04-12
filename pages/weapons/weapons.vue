@@ -194,6 +194,15 @@
 								{{item.phial.damage}}
 							</view> -->
 						</view>
+						<!-- insect-glaive - boostType and damageType -->
+						<view class="weapon-value-box weapon-boostType" v-if="item.boostType">
+							<view class="weapon-value-icon weapon-boostType-icon">
+								<image :src="'../../static/weapon/boostType.png'" mode="aspectFit"></image>
+							</view>
+							<view class="weapon-value">
+								{{item.boostType}}{{item.damageType != item.boostType ? '【'+item.damageType+'】' : ''}}
+							</view>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -429,12 +438,14 @@
 						.weapon-ammo-item{
 							display: flex;
 							justify-content: left;
-							flex: 0 0 calc(24%);
+							flex: 0 0 calc(31%);
 							box-sizing: border-box;
 							align-items: center;
 							border: 1px solid rgba(223, 223, 223, 1);
 							margin-right: 1px;
 							margin-bottom: 1px;
+							margin-top: 0;
+							border-radius: 3px;
 							.weapon-ammo-number{
 								padding: 1px;
 							}
