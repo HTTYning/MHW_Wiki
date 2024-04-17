@@ -1,9 +1,9 @@
 <template>
 	<view class="content">
 		<view class="weapon-fold">
-			<view class="weapon-fold-title">
-				<view>武器</view>
-				<view class="weapon-fold-btn" @click="switchWeapon()">
+			<view class="weapon-fold-title" @click="switchWeapon()">
+				<view>Weapon</view>
+				<view class="weapon-fold-btn">
 					<image src="../../static/show-btn.png" :class="weaponStatus?'':'weapon-fold-btn-rotate'" mode="aspectFit"></image>
 				</view>
 			</view>

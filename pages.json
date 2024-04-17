@@ -1,27 +1,78 @@
 {
+	"tabBar": {
+		"color": "#bfbfbf",
+		"selectedColor": "#000000",  
+		"list": [
+			{
+			  "pagePath": "pages/index/index",
+			  "text": "Wiki",
+			  "iconPath": "static/tabbar/book.png",
+			  "selectedIconPath": "static/tabbar/book-selected.png"
+			},
+			{
+			  "pagePath": "pages/collection/collection",
+			  "text": "Collection",
+			  "iconPath": "static/tabbar/collection.png",
+			  "selectedIconPath": "static/tabbar/collection-selected.png"
+			},
+			{
+			  "pagePath": "pages/personal/personal",
+			  "text": "Personal",
+			  "iconPath": "static/tabbar/personal.png",
+			  "selectedIconPath": "static/tabbar/personal-selected.png"
+			}
+		]
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "主页"
-			}
+				"navigationBarTitleText": "Wiki"
+			} 
 		},
 		{
 		    "path" : "pages/weapons/weapons",
 		    "style" :                                                                                    
 		    {
-		        "navigationBarTitleText": "武器"
+		        "navigationBarTitleText": "Weapon"
 		    }
-		}
-        ,{
+		},
+		{
             "path" : "pages/weaponDetails/weaponDetails",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "武器详细"
+                "navigationBarTitleText": "Weapon Details"
+            }
+        }
+        ,{
+            "path" : "pages/personal/personal",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "Personal"
+            }
+        }
+        ,{
+            "path" : "pages/setting/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "setting"
             }
             
         }
+        ,{
+            "path" : "pages/collection/collection",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "collection"
+            }
+        }
     ],
+	"style": {
+		"app-plus": {
+			"animationType": "pop-in",
+			"animationDuration": 300
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

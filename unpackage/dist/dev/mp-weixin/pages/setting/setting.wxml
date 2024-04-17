@@ -1,0 +1,1 @@
+<view><view data-event-opts="{{[['tap',[['removeData']]]]}}" class="clear-data-btn" bindtap="__e">Clean up all local caches</view></view>

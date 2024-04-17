@@ -1,5 +1,10 @@
 <template>
 	<view>
+		<view class="loading-tip" v-if="loading">
+			<view>Wait a moment.....</view>
+			<view>Local data loss...Re pulling...</view>
+			<view>This window will automatically close...</view>
+		</view>
 		<view class="search-box">
 			<view class="search-text">
 				<input class="search-ipt" @input="searchEvent()" type="text" v-model="searchTxt" placeholder="Please enter a name">
@@ -17,7 +22,7 @@
 			</view>
 		</view>
 		<view class="weaponList">
-			<view class="weapon-item" v-for="item in weapons" :key="item.id" @click="weaponDetails(item.id)">
+			<view class="weapon-item" v-for="item in weapons" :key="item.id" @click="weaponDetails(item)">
 				<view class="weapon-titile-bar">
 					<view class="weapon-icon">
 						<img :src="item.assets.icon" alt="" mode="aspectFit">
@@ -226,13 +231,13 @@
 				slotsNullStr:"null",
 				weaponsType:'',
 				weaponTypeImagePath:'',
-				searchTxt:''
+				searchTxt:'',
+				loading:false, // 是否正在加载
 			};
 		},
 		onLoad(option) {
 			this.weaponsType = option.weaponName;
 			this.weaponTypeImagePath = '../../static/index-weapon/weapon_type_'+this.weaponsType+'.png'
-			// this.removeData('weaponsData');
 			this.checkData();
 		},
 		methods: {
@@ -260,26 +265,18 @@
 					const value = uni.getStorageSync('weaponsData');
 					if (value) {
 						console.log('武器本地数据存在!');
-						console.log(value);
+						// console.log(value);
+						this.loading = false;
 						this.renderingData();// 渲染数据
 						return true;
 					} else {
 						console.error("武器本地数据丢失，正在重新获取数据!");
+						this.loading = true;
 						this.getWeapons();
 					}
 				} catch (e) {
 					console.error('武器数据获取失败');
 					return false;
-				}
-			},
-			// 删除本地数据（未启用）
-			removeData(storageId) {
-				// 同步删除数据
-				try {
-					uni.removeStorageSync(storageId);
-					console.log(storageId + ' - 本地数据删除成功!');
-				} catch (e) {
-					console.error(storageId + ' - 本地数据删除失败!');
 				}
 			},
 			// 加载数据到数组里进行数据渲染
@@ -297,7 +294,7 @@
 							}
 						}
 						this.weapons = rdDataArray;
-						console.log(this.weapons);
+						// console.log(this.weapons);
 					}
 				} catch (e) {
 					console.error('武器数据获取失败');
@@ -330,9 +327,9 @@
 				}
 			},
 			// 跳转到武器详情页面
-			weaponDetails(weaponId){
+			weaponDetails(weaponItem){
 				uni.navigateTo({
-					url: '/pages/weaponDetails/weaponDetails?&weaponId='+weaponId
+					url: '/pages/weaponDetails/weaponDetails?&weaponItem='+encodeURIComponent(JSON.stringify(weaponItem))
 				});
 			},
 		}
@@ -340,6 +337,27 @@
 </script>
 
 <style lang="scss">
+	.loading-tip{
+		width: 98%;
+		padding: 10px;
+		height: 98%;
+		color: rgba(245, 245, 245, 1);
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		background-color: rgba(200, 200, 200, 1);
+		z-index: 1001;
+		view{
+			font-size: 30px;
+			margin-bottom: 30px;
+		}
+	}
 	.search-box{
 		width: 80%;
 		height: 40px;
@@ -434,7 +452,6 @@
 					margin-left: 10px;
 					size: 20px;
 					font-weight: bold;
-					color:black;
 					color: rgba(45, 45, 45, 1);
 				}
 			}

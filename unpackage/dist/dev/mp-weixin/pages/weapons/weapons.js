@@ -364,6 +364,11 @@ var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/r
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
     return {
@@ -371,13 +376,13 @@ var _default = {
       slotsNullStr: "null",
       weaponsType: '',
       weaponTypeImagePath: '',
-      searchTxt: ''
+      searchTxt: '',
+      loading: false // 是否正在加载
     };
   },
   onLoad: function onLoad(option) {
     this.weaponsType = option.weaponName;
     this.weaponTypeImagePath = '../../static/index-weapon/weapon_type_' + this.weaponsType + '.png';
-    // this.removeData('weaponsData');
     this.checkData();
   },
   methods: {
@@ -435,37 +440,29 @@ var _default = {
                   break;
                 }
                 console.log('武器本地数据存在!');
-                console.log(value);
+                // console.log(value);
+                _this2.loading = false;
                 _this2.renderingData(); // 渲染数据
                 return _context2.abrupt("return", true);
               case 9:
                 console.error("武器本地数据丢失，正在重新获取数据!");
+                _this2.loading = true;
                 _this2.getWeapons();
-              case 11:
-                _context2.next = 17;
+              case 12:
+                _context2.next = 18;
                 break;
-              case 13:
-                _context2.prev = 13;
+              case 14:
+                _context2.prev = 14;
                 _context2.t0 = _context2["catch"](0);
                 console.error('武器数据获取失败');
                 return _context2.abrupt("return", false);
-              case 17:
+              case 18:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 13]]);
+        }, _callee2, null, [[0, 14]]);
       }))();
-    },
-    // 删除本地数据（未启用）
-    removeData: function removeData(storageId) {
-      // 同步删除数据
-      try {
-        uni.removeStorageSync(storageId);
-        console.log(storageId + ' - 本地数据删除成功!');
-      } catch (e) {
-        console.error(storageId + ' - 本地数据删除失败!');
-      }
     },
     // 加载数据到数组里进行数据渲染
     renderingData: function renderingData() {
@@ -482,7 +479,7 @@ var _default = {
             }
           }
           this.weapons = rdDataArray;
-          console.log(this.weapons);
+          // console.log(this.weapons);
         }
       } catch (e) {
         console.error('武器数据获取失败');
@@ -515,9 +512,9 @@ var _default = {
       }
     },
     // 跳转到武器详情页面
-    weaponDetails: function weaponDetails(weaponId) {
+    weaponDetails: function weaponDetails(weaponItem) {
       uni.navigateTo({
-        url: '/pages/weaponDetails/weaponDetails?&weaponId=' + weaponId
+        url: '/pages/weaponDetails/weaponDetails?&weaponItem=' + encodeURIComponent(JSON.stringify(weaponItem))
       });
     }
   }

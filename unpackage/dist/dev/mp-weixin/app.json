@@ -2,7 +2,10 @@
   "pages": [
     "pages/index/index",
     "pages/weapons/weapons",
-    "pages/weaponDetails/weaponDetails"
+    "pages/weaponDetails/weaponDetails",
+    "pages/personal/personal",
+    "pages/setting/setting",
+    "pages/collection/collection"
   ],
   "subPackages": [],
   "window": {
@@ -10,6 +13,30 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#bfbfbf",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "Wiki",
+        "iconPath": "static/tabbar/book.png",
+        "selectedIconPath": "static/tabbar/book-selected.png"
+      },
+      {
+        "pagePath": "pages/collection/collection",
+        "text": "Collection",
+        "iconPath": "static/tabbar/collection.png",
+        "selectedIconPath": "static/tabbar/collection-selected.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "Personal",
+        "iconPath": "static/tabbar/personal.png",
+        "selectedIconPath": "static/tabbar/personal-selected.png"
+      }
+    ]
   },
   "usingComponents": {}
 }
