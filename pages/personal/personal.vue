@@ -24,8 +24,8 @@
 				<image src="../../static/personal/right.png" mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="window-bg" :class="windowStatus ? 'window-bg-show':''">
-			<view class="window-box">
+		<view class="window-bg" :class="windowStatus ? 'window-bg-show':''" @click="windowSwitch()">
+			<view class="window-box" @click.stop="">
 				<view class="window-title" v-if="accountOperation == 'login'">
 					Login
 				</view>
@@ -469,6 +469,7 @@
 			height: 93%;
 			border-radius: 10px;
 			background-color: rgba(255, 255, 255, 1);
+			border: 3px solid #dfdfdf;
 			position: relative;
 			display: flex;
 			flex-direction: column;

@@ -44,6 +44,7 @@
   height: 93%;
   border-radius: 10px;
   background-color: white;
+  border: 3px solid #dfdfdf;
   position: relative;
   display: flex;
   flex-direction: column;
