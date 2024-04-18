@@ -1,5 +1,9 @@
 <script>
 	export default {
+		globalData: {
+			serverUrl: 'http://127.0.0.1:1145'
+			// serverUrl: 'http://10.95.17.43:1145'
+		},
 		onLaunch: function() {
 			console.log('App Launch')
 		},

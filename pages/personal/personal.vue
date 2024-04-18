@@ -2,20 +2,17 @@
 	<view>
 		<view class="personal-info">
 			<view class="info-box-left">
-				<view class="info-headImage">
-					<image src="../../static/personal/defaultHeadImage.png" mode="aspectFit"></image>
+				<view class="info-headImage" @click="choiceImageEvent()">
+					<image :src="userInfo.loginStatus ? userInfo.headImagePath:userInfo.defaultImagePath" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="info-box-middle">
 				<view class="info-name">
-					丛雨
-				</view>
-				<view class="info-introduction">
-					什么都没留下
+					{{userInfo.loginStatus ? userInfo.nickname:'Not logged in'}}
 				</view>
 			</view>
-			<view class="info-box-right" @click="windowSwitch()">
-				登出
+			<view class="info-box-right">
+				<view @click="choiceLoginOrExited()">{{userInfo.loginStatus ? 'Log Out':'Log In'}}</view>
 			</view>
 		</view>
 		<view class="setting-box" @click="goSettingPage()">
@@ -24,7 +21,7 @@
 				<image src="../../static/personal/right.png" mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="window-bg" :class="windowStatus ? 'window-bg-show':''" @click="windowSwitch()">
+		<view class="window-bg" :class="windowStatus ? 'window-bg-show':''" @click="choiceLoginOrExited()">
 			<view class="window-box" @click.stop="">
 				<view class="window-title" v-if="accountOperation == 'login'">
 					Login
@@ -39,17 +36,23 @@
 					<view class="ipt-item" @click="switchLoginIptStatus('Phone')" v-if="isEmailLogin == false">
 						<view class="item-text" :class="loginIptStatus.Phone ? 'item-text-show':''">
 							<view>Phone</view>
+							<view class="tip-text">
+								{{loginTip.Phone}}
+							</view>
 						</view>
 						<view class="item-ipt-box" :class="loginIptStatus.Phone ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="loginIptValue.Phone" :focus="loginIptStatus.Phone" @blur="blurLoginIpt('Phone')" type="number" maxlength="13"/>
+							<input class="item-ipt" v-model.trim="loginIptValue.Phone" @input="checkLoginIptValue('Phone')" :focus="loginIptStatus.Phone" @blur="blurLoginIpt('Phone')" type="number" maxlength="13"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchLoginIptStatus('Email')" v-if="isEmailLogin == true">
 						<view class="item-text" :class="loginIptStatus.Email ? 'item-text-show':''">
 							<view>Email</view>
+							<view class="tip-text">
+								{{loginTip.Email}}
+							</view>
 						</view>
 						<view class="item-ipt-box" :class="loginIptStatus.Email ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="loginIptValue.Email" :focus="loginIptStatus.Email" @blur="blurLoginIpt('Email')" type="text" maxlength="30"/>
+							<input class="item-ipt" v-model.trim="loginIptValue.Email" @input="checkLoginIptValue('Email')" :focus="loginIptStatus.Email" @blur="blurLoginIpt('Email')" type="text" maxlength="30"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchLoginIptStatus('Password')">
@@ -57,7 +60,7 @@
 							<view>Password</view>
 						</view>
 						<view class="item-ipt-box" :class="loginIptStatus.Password ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="loginIptValue.Password" :focus="loginIptStatus.Password" @blur="blurLoginIpt('Password')" password type="text" maxlength="30"/>
+							<input class="item-ipt" v-model.trim="loginIptValue.Password" :focus="loginIptStatus.Password" @blur="blurLoginIpt('Password')" password type="text" maxlength="30"/>
 						</view>
 					</view>
 				</view>
@@ -70,7 +73,7 @@
 							</view>
 						</view>
 						<view class="item-ipt-box" :class="registerIptStatus.Nickname ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="registerIptValue.Nickname" :focus="registerIptStatus.Nickname" @input="checkIptValue('Nickname')" @blur="blurRegisterIpt('Nickname')" type="text" maxlength="20"/>
+							<input class="item-ipt" v-model.trim="registerIptValue.Nickname" :focus="registerIptStatus.Nickname" @input="checkIptValue('Nickname')" @blur="blurRegisterIpt('Nickname')" type="text" maxlength="20"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchRegisterIptStatus('Phone')">
@@ -81,7 +84,7 @@
 							</view>
 						</view>
 						<view class="item-ipt-box" :class="registerIptStatus.Phone ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="registerIptValue.Phone" :focus="registerIptStatus.Phone" @input="checkIptValue('Phone')" @blur="blurRegisterIpt('Phone')" type="number" maxlength="13"/>
+							<input class="item-ipt" v-model.trim="registerIptValue.Phone" :focus="registerIptStatus.Phone" @input="checkIptValue('Phone')" @blur="blurRegisterIpt('Phone')" type="number" maxlength="13"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchRegisterIptStatus('Email')">
@@ -92,7 +95,7 @@
 							</view>
 						</view>
 						<view class="item-ipt-box" :class="registerIptStatus.Email ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="registerIptValue.Email" :focus="registerIptStatus.Email" @input="checkIptValue('Email')" @blur="blurRegisterIpt('Email')" type="text" maxlength="30"/>
+							<input class="item-ipt" v-model.trim="registerIptValue.Email" :focus="registerIptStatus.Email" @input="checkIptValue('Email')" @blur="blurRegisterIpt('Email')" type="text" maxlength="30"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchRegisterIptStatus('Password')">
@@ -103,7 +106,7 @@
 							</view>
 						</view>
 						<view class="item-ipt-box" :class="registerIptStatus.Password ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="registerIptValue.Password" :focus="registerIptStatus.Password" @input="checkIptValue('Password')" @blur="blurRegisterIpt('Password')" password type="text" maxlength="30"/>
+							<input class="item-ipt" v-model.trim="registerIptValue.Password" :focus="registerIptStatus.Password" @input="checkIptValue('Password')" @blur="blurRegisterIpt('Password')" password type="text" maxlength="30"/>
 						</view>
 					</view>
 					<view class="ipt-item" @click="switchRegisterIptStatus('ConfirmPassword')">
@@ -114,16 +117,16 @@
 							</view>
 						</view>
 						<view class="item-ipt-box" :class="registerIptStatus.ConfirmPassword ? 'item-ipt-box-show':''">
-							<input class="item-ipt" v-model="registerIptValue.ConfirmPassword" :focus="registerIptStatus.ConfirmPassword" @input="checkIptValue('ConfirmPassword')" @blur="blurRegisterIpt('ConfirmPassword')" password type="text" maxlength="30"/>
+							<input class="item-ipt" v-model.trim="registerIptValue.ConfirmPassword" :focus="registerIptStatus.ConfirmPassword" @input="checkIptValue('ConfirmPassword')" @blur="blurRegisterIpt('ConfirmPassword')" password type="text" maxlength="30"/>
 						</view>
 					</view>
 				</view>
 				<view class="operation-btn-box">
 					<view class="operation-btn-item login-btn" v-if="accountOperation == 'login'">
-						<button class="operation-btn" type="default">Login</button>
+						<button class="operation-btn" type="default" @click="loginEvent()">Login</button>
 					</view>
 					<view class="operation-btn-item register-btn" v-if="accountOperation == 'register'">
-						<button class="operation-btn" type="default">Register</button>
+						<button class="operation-btn" type="default" @click="registerEvent()">Register</button>
 					</view>
 					<view class="operation-btn-item switch-login-btn" v-if="accountOperation == 'register'" @click="switchOperation('login')">
 						<button class="operation-btn" type="default">Go Login</button>
@@ -147,6 +150,13 @@
 	export default {
 		data() {
 			return {
+				userInfo:{
+					id:null,
+					nickname:'',
+					headImagePath:'',
+					defaultImagePath:'../../static/personal/defaultHeadImage.png',
+					loginStatus:false
+				},
 				windowStatus:false,
 				accountOperation:'login',
 				isEmailLogin:false,
@@ -157,8 +167,8 @@
 				},
 				loginIptValue:{
 					Phone:'',
+					Email:'',
 					Password:'',
-					Email:''
 				},
 				registerIptStatus:{
 					Nickname:false,
@@ -173,6 +183,11 @@
 					Password:'',
 					ConfirmPassword:'',
 					Email:''
+				},
+				loginTip:{
+					Phone:'',
+					Email:'',
+					Password:'',
 				},
 				registerTip:{
 					Nickname:'',
@@ -191,9 +206,42 @@
 			};
 		},
 		onLoad(){
-			this.windowStatus = true;
+			// this.windowStatus = true;
+			const userInfoData = uni.getStorageSync('userInfo');
+			if(userInfoData){
+				console.log(1);
+				if(userInfoData.loginStatus){
+					console.log(2);
+					this.userInfo = {
+						id:userInfoData.id,
+						nickname:userInfoData.nickname,
+						headImagePath:userInfoData.headImagePath,
+						defaultImagePath:'../../static/personal/defaultHeadImage.png',
+						loginStatus:userInfoData.loginStatus
+					},
+					console.log(userInfoData);
+					console.log(this.userInfo);
+				}
+			}
 		},
 		methods:{
+			choiceLoginOrExited(){
+				if(this.userInfo.loginStatus){
+					this.userInfo = {
+						id:null,
+						nickname:'',
+						headImagePath:'',
+						defaultImagePath:'../../static/personal/defaultHeadImage.png',
+						loginStatus:false
+					};
+					uni.removeStorageSync('userInfo');
+					uni.showToast({
+						title:'Log Out!'
+					});
+				}else{
+					this.windowSwitch();
+				}
+			},
 			windowSwitch(){
 				this.windowStatus = !this.windowStatus;
 			},
@@ -335,10 +383,11 @@
 				switch (key){
 					case "Nickname":
 						if(this.registerIptValue.Nickname != ''){
-							this.registerTip.Nickname = 'This nickname is already in use';
-							this.iptValidate.Nickname = false;
+							this.registerTip.Nickname = '';
+							this.iptValidate.Nickname = true;
 						}else{
 							this.registerTip.Nickname = 'Cannot be empty';
+							this.iptValidate.Nickname = false;
 						}
 						break;
 					case "Phone":
@@ -401,6 +450,28 @@
 						break;
 				}
 			},
+			checkLoginIptValue(key){
+				switch (key){
+					case "Phone":
+						if(this.loginIptValue.Phone != ''){
+							this.loginTip.Phone = '';
+						}else{
+							this.loginTip.Phone = 'Cannot be empty';
+						}
+						break;
+					case "Email":
+						if(this.loginIptValue.Email != ''){
+							this.loginTip.Email = '';
+						}else{
+							this.loginTip.Email = 'Cannot be empty';
+						}
+						break;
+					default:
+						return;
+						break;
+				}
+			},
+			
 			phoneValidate(phone){
 				let validateArr = [];
 				let chinaPhoneRegex = /^1[3-9]\d{9}$/;
@@ -440,6 +511,202 @@
 					}
 				}
 				return false;
+			},
+			
+			async loginEvent(){
+				let serverUrl = getApp().globalData.serverUrl;// 服务器地址
+				let result;
+				let userInfo = this.loginIptValue;// 临时存储数据
+				
+				if((userInfo.Email != '' || userInfo.Phone != '') && userInfo.Password != ''){
+					result = await uni.request({
+						url: serverUrl+`/user/login`,
+						method:'POST',
+						data:{
+							email:userInfo.Email,
+							phone:userInfo.Phone,
+							password:userInfo.Password,
+							isEmailLogin:this.isEmailLogin
+						}
+					});
+					console.log(result);
+					if(result.data.data.length == 1){
+						this.userInfo.loginStatus = true;
+						this.userInfo.id = result.data.data[0].id;
+						this.userInfo.nickname = result.data.data[0].user_name;
+						this.getUserHeadImage(serverUrl,this.userInfo.id);
+						console.log(this.userInfo);
+						this.windowSwitch();
+						uni.setStorageSync('userInfo', this.userInfo);
+						this.initAllInputData();// 初始化所有表单数据
+					}else{
+						if(this.isEmailLogin){
+							this.loginTip.Email = 'Email or password error.'
+						}else{
+							this.loginTip.Phone = 'Wrong phone number or password.'
+						}
+					}
+				}else{
+					if(this.isEmailLogin){
+						this.loginTip.Email = 'Cannot be empty.'
+					}else{
+						this.loginTip.Phone = 'Cannot be empty.'
+					}
+				}
+			},
+			async registerEvent(){
+				let serverUrl = getApp().globalData.serverUrl;// 服务器地址
+				
+				// 判断是否满足条件
+				// nameIsExist是判断用户名是否存在的布尔值，false则用户名不存在，可以创建用户；true则是用户名存在，不可创建用户
+				let nameIsExist = await uni.request({
+					url: serverUrl+`/user/selectUserNameIsExist`,
+					method:'POST',
+					data:{
+						userName:this.registerIptValue.Nickname
+					}
+				});
+				let validateArr = [];
+				let userValidate = this.iptValidate;// 临时存储数据
+				if(!nameIsExist.data.data){
+					if(userValidate.Nickname != ''){
+						userValidate.Nickname = true;
+						validateArr.push(userValidate.Nickname);
+						validateArr.push(userValidate.Phone);
+						validateArr.push(userValidate.Password);
+						validateArr.push(userValidate.ConfirmPassword);
+						validateArr.push(userValidate.Email);
+						for (var i = 0; i < validateArr.length; i++) {
+							if(!validateArr[i]){
+								return false;
+							}
+						}
+					}else{
+						this.registerTip.Nickname = 'Cannot be empty';
+						this.iptValidate.Nickname = false;
+						return;
+					}
+				}else{
+					this.registerTip.Nickname = 'This nickname is already in use';
+					this.iptValidate.Nickname = false;
+					return;
+				}		
+				
+				// 验证完毕，开始请求创建账号
+				let userInfo = this.registerIptValue;// 临时存储数据
+				let createAccountResult = await uni.request({
+					url: serverUrl+`/user/createAccount`,
+					method:'POST',
+					data:{
+						userName:userInfo.Nickname,
+						phone:userInfo.Phone,
+						password:userInfo.Password,
+						email:userInfo.Email
+					}
+				});
+				if(createAccountResult.data.data.affectedRows == 1){
+					let createImageResult = await uni.request({
+						url: serverUrl+`/user/addUserHeadImageData`,
+						method:'POST',
+						data:{
+							userId:createAccountResult.data.data.insertId
+						}
+					});
+					this.userInfo.id = createAccountResult.data.data.insertId;
+					if(createImageResult.data.data.affectedRows == 1){
+						this.switchOperation('login');// 切换到登录表单
+						this.initAllInputData();// 初始化所有表单数据
+					}
+				}
+			},
+			choiceImageEvent(){
+				if(this.userInfo.loginStatus){
+					let serverUrl = getApp().globalData.serverUrl;// 服务器地址
+					uni.chooseImage({
+						success: (chooseImageRes) => {
+							const tempFilePaths = chooseImageRes.tempFilePaths;
+							console.log(tempFilePaths);
+							uni.uploadFile({
+								url: serverUrl+'/user/uploadUserHeadImageName',
+								name:'img',
+								filePath:tempFilePaths[0],
+								timeout:300,
+								formData:{
+									userId:this.userInfo.id
+								},
+								success: (res) => {
+									// console.log(res.data);
+									this.getUserHeadImage(serverUrl,this.userInfo.id);
+									uni.setStorageSync('userInfo', this.userInfo);
+								},
+								fail:function(err){
+									console.log(err);
+								},
+								complete:function(cp){
+									console.log(cp);
+								},
+							});
+						}
+					});
+				}else{
+					this.windowSwitch();
+				}
+			},
+			async getUserHeadImage(serverUrl,id){
+				let result = await uni.request({
+					url: serverUrl+`/user/getUserHeadImage`,
+					method:'GET',
+					data:{
+						userId:id
+					}
+				});
+				if(result){
+					if(result.data.data[0].image_name != ''){
+						this.userInfo.headImagePath = serverUrl+'/images/userHeadImage/'+result.data.data[0].image_name;
+					}else{
+						this.userInfo.headImagePath = this.userInfo.defaultImagePath;
+					}
+					uni.setStorageSync('userInfo', this.userInfo);
+				}
+			},
+			
+			initAllInputData(){
+				this.registerIptValue = {
+					Nickname:'',
+					Phone:'',
+					Password:'',
+					ConfirmPassword:'',
+					Email:''
+				};
+				this.registerTip = {
+					Nickname:'',
+					Phone:'',
+					Email:'',
+					Password:'',
+					ConfirmPassword:''
+				};
+				this.iptValidate = {
+					Nickname:false,
+					Phone:false,
+					Password:false,
+					ConfirmPassword:false,
+					Email:false
+				};
+				this.loginIptStatus = {
+					Phone:false,
+					Password:false,
+					Email:false
+				};
+				this.loginIptValue = {
+					Phone:'',
+					Email:'',
+					Password:''
+				};
+				this.loginTip = {
+					Phone:'',
+					Email:'',
+					Password:''
+				};
 			},
 			goSettingPage(){
 				uni.navigateTo({
@@ -584,8 +851,8 @@
 				align-items: center;
 				overflow: hidden;
 				image{
-					width: 100px;
-					height: 100px;
+					width: 100%;
+					height: 100%;
 				}
 			}
 		}
@@ -602,11 +869,6 @@
 				font-size: 20px;
 				font-weight: bold;
 				color: black;
-			}
-			.info-introduction{
-				color: #2d2d2d;
-				margin-top: 5px;
-				font-size: 14px;
 			}
 		}
 		.info-box-right{

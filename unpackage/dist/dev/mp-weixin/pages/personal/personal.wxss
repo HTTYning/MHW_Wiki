@@ -161,8 +161,8 @@
   overflow: hidden;
 }
 .personal-info .info-box-left .info-headImage image {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
 }
 .personal-info .info-box-middle {
   height: 100%;
@@ -178,11 +178,6 @@
   font-size: 20px;
   font-weight: bold;
   color: black;
-}
-.personal-info .info-box-middle .info-introduction {
-  color: #2d2d2d;
-  margin-top: 5px;
-  font-size: 14px;
 }
 .personal-info .info-box-right {
   padding: 5px 10px;
